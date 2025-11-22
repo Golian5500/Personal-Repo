@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Advanced Pixel Painter</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            display: flex;
+            height: 100vh;
+            background: #f0f0f0;
+        }
+
+        /* Left panel for settings */
+        #panel {
+            width: 220px;
+            background: #ddd;
+            padding: 20px;
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        #panel h2 {
+            margin-top: 0;
+        }
+
+        #panel label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        #canvasContainer {
+            flex-grow: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        #canvas {
+            display: grid;
+            background: #999;
+            border-radius: 8px;
+            gap: 1px;
+        }
+
+        .pixel {
+            background: white;
+            cursor: pointer;
+            width: 20px;
+            height: 20px;
+        }
+
+        .colorBtn {
+            width: 30px;
+            height: 30px;
+            display: inline-block;
+            margin: 3px;
+            border: 2px solid #aaa;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .colorBtn.selected {
+            border: 2px solid black;
+        }
+
+        #downloadBtn {
+            padding: 10px;
+            background: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+
+        #downloadBtn:hover {
+            background: #45a049;
+        }
+
+        input[type=number] {
+            width: 80px;
+        }
+
+        input[type=color] {
+            width: 100%;
+            height: 40px;
+            border: none;
+            padding: 0;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="panel">
+        <h2>Settings</h2>
+
+        <div>
+            <label for="gridSizeInput">Grid Size</label>
+            <input type="number" id="gridSizeInput" min="5" max="100" value="20">
+        </div>
+
+        <div>
+            <label>Preset Colors</label>
+            <div id="presetColors"></div>
+        </div>
+
+        <div>
+            <label>Custom Color</label>
+            <input type="color" id="customColor" value="#808080">
+        </div>
+
+        <button id="downloadBtn">Download PNG</button>
+    </div>
+
+    <div id="canvasContainer">
+        <div id="canvas"></div>
+    </div>
+
+    <script>
+        const canvas = document.getElementById("canvas");
+        const presetColorsContainer = document.getElementById("presetColors");
+        const customColorInput = document.getElementById("customColor");
+        const gridSizeInput = document.getElementById("gridSizeInput");
+        const downloadBtn = document.getElementById("downloadBtn");
+
+        let gridSize = parseInt(gridSizeInput.value);
+        let pixels = [];
+        let isMouseDown = false;
+        let selectedColor = customColorInput.value;
+
+        // Preset colors
+        const presetColors = ["gray","red","blue","green","yellow","orange","purple","pink","black","white"];
+
+        // Create preset color buttons
+        presetColors.forEach(color => {
+            const btn = document.createElement("div");
+            btn.classList.add("colorBtn");
+            btn.style.backgroundColor = color;
+            btn.addEventListener("click", () => {
+                selectedColor = color;
+                document.querySelectorAll(".colorBtn").forEach(b => b.classList.remove("selected"));
+                btn.classList.add("selected");
+            });
+            presetColorsContainer.appendChild(btn);
+        });
+
+        // Custom color changes selected color
+        customColorInput.addEventListener("input", () => {
+            selectedColor = customColorInput.value;
+            document.querySelectorAll(".colorBtn").forEach(b => b.classList.remove("selected"));
+        });
+
+        // Create canvas grid
+        function createGrid(size) {
+            canvas.innerHTML = "";
+            pixels = [];
+            canvas.style.gridTemplateColumns = `repeat(${size}, 20px)`;
+            canvas.style.gridTemplateRows = `repeat(${size}, 20px)`;
+            for(let i = 0; i < size*size; i++){
+                const pixel = document.createElement("div");
+                pixel.classList.add("pixel");
+                pixel.addEventListener("mousedown", () => {
+                    pixel.style.backgroundColor = selectedColor;
+                });
+                pixel.addEventListener("mouseenter", () => {
+                    if(isMouseDown) pixel.style.backgroundColor = selectedColor;
+                });
+                canvas.appendChild(pixel);
+                pixels.push(pixel);
+            }
+        }
+
+        // Initialize grid
+        createGrid(gridSize);
+
+        // Drag-to-paint
+        document.body.addEventListener("mousedown", () => isMouseDown = true);
+        document.body.addEventListener("mouseup", () => isMouseDown = false);
+
+        // Update grid size
+        gridSizeInput.addEventListener("change", () => {
+            gridSize = parseInt(gridSizeInput.value);
+            createGrid(gridSize);
+        });
+
+        // Download canvas as PNG
+        downloadBtn.addEventListener("click", () => {
+            const tempCanvas = document.createElement("canvas");
+            const ctx = tempCanvas.getContext("2d");
+            tempCanvas.width = gridSize;
+            tempCanvas.height = gridSize;
+
+            pixels.forEach((pixel, index) => {
+                const x = index % gridSize;
+                const y = Math.floor(index / gridSize);
+                ctx.fillStyle = window.getComputedStyle(pixel).backgroundColor;
+                ctx.fillRect(x, y, 1, 1);
+            });
+
+            // Scale up
+            const scale = 20;
+            const finalCanvas = document.createElement("canvas");
+            finalCanvas.width = gridSize * scale;
+            finalCanvas.height = gridSize * scale;
+            const finalCtx = finalCanvas.getContext("2d");
+            finalCtx.imageSmoothingEnabled = false;
+            finalCtx.drawImage(tempCanvas, 0, 0, finalCanvas.width, finalCanvas.height);
+
+            const link = document.createElement("a");
+            link.download = "pixel-art.png";
+            link.href = finalCanvas.toDataURL();
+            link.click();
+        });
+    </script>
+
+</body>
+</html>
