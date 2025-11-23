@@ -1,10 +1,13 @@
+html::-webkit-scrollbar{
+    display: none;
+}
 body{
     width: 100%;
     height: 100dvh;
     font-family: Arial, Helvetica, sans-serif;
     display: flex;
     flex-direction: column;
-    gap: 75px;
+    gap: 25px;
     justify-content: flex-start;
     align-items: center;
     padding: 0;
@@ -22,42 +25,36 @@ body{
     font-size: 25px;
     font-weight: 100;
 }
+
 .games-and-stuff-container {
-    width: 90%;
     display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    gap: 20px;
     flex-wrap: wrap;
+    justify-content: space-around;
+    width: 90%;
+    margin: 0 auto;
+    gap: 20px 0;
+    padding-bottom: 35px;
 }
 
 .game {
-    display: flex;
-    background-color: gray;
-    flex: 1 1 300px;
-    min-width: 200px;
-    min-height: 150px;
-    max-width: 350px;
-    border-radius: 10px;
-    justify-content: center;
-    align-items: center;
-    border: none;
-    border-radius: 5px;
-}
-
-.game .container{
-    width: 99%;
-    height: 97%;
-    border: none;
-    border-radius: 5px;
+    flex: 1 1 calc(33.33% - 60px);   /* leave ~60px free for spacing */
+    max-width: 500px;                /* <— important: prevents over-stretch */
+    min-width: 240px;                /* keeps things responsive */
+    margin: 0 10px;                  /* ensures spacing stays visible */
+    background-color: #9b9b9b;
+    border-radius: 12px;
+    padding: 12px;
+    box-sizing: border-box;
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    align-items: center;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    margin-top: 40px;
 }
-.game img{
-    flex: 1 1 300px;
-    min-width: 200px;
-    min-height: 150px;
-    max-width: 350px;
+
+.game img {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    object-fit: cover;
+    border-radius: 8px;
+    display: block;
 }
