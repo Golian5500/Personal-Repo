@@ -1,43 +1,51 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Calculator</title>
     <link rel="stylesheet" type="text/css" href="css/calculator.css">
 </head>
+
 <body>
-    <a href="index.html" class="drin-fun">DRIN.FUN</a>
-    <div class="calculator">
-        <div class="row-one row">
-            <div class="screen"></div>
-            <button class="clear">C</button>
-        </div>
-        <div class="row-two row">
-            <button class="button-7" onclick="buttonPressed('7')">7</button>
-            <button class="button-8" onclick="buttonPressed('8')">8</button>
-            <button class="button-9" onclick="buttonPressed('9')">9</button>
-            <button class="button-/" onclick="buttonPressed('/')">/</button>
-        </div>
-        <div class="row-three row">
-            <button class="button-4" onclick="buttonPressed('4')">4</button>
-            <button class="button-5" onclick="buttonPressed('5')">5</button>
-            <button class="button-6" onclick="buttonPressed('6')">6</button>
-            <button class="button-*" onclick="buttonPressed('*')">*</button>
-        </div>
-        <div class="row-four row">
-            <button class="button-1" onclick="buttonPressed('1')">1</button>
-            <button class="button-2" onclick="buttonPressed('2')">2</button>
-            <button class="button-3" onclick="buttonPressed('3')">3</button>
-            <button class="button--" onclick="buttonPressed('-')">-</button>
-        </div>
-        <div class="row-four row">
-            <button class="button-0" onclick="buttonPressed('0')">0</button>
-            <button class="button-." onclick="buttonPressed('.')">.</button>
-            <button class="button-+" onclick="buttonPressed('+')">+</button>
-            <button class="button-=" onclick="buttonPressed('=')">=</button>
+    <div class="header">
+        <a href="index.html" class="drin-fun">DRIN.FUN</a>
+    </div>
+    <div class="calculator-container">
+        <div class="calculator">
+            <div class="row-one row">
+                <div class="screen"></div>
+                <button class="clear">C</button>
+            </div>
+            <div class="row-two row">
+                <button class="button-7" onclick="buttonPressed('7')">7</button>
+                <button class="button-8" onclick="buttonPressed('8')">8</button>
+                <button class="button-9" onclick="buttonPressed('9')">9</button>
+                <button class="button-/" onclick="buttonPressed('/')">/</button>
+            </div>
+            <div class="row-three row">
+                <button class="button-4" onclick="buttonPressed('4')">4</button>
+                <button class="button-5" onclick="buttonPressed('5')">5</button>
+                <button class="button-6" onclick="buttonPressed('6')">6</button>
+                <button class="button-*" onclick="buttonPressed('*')">*</button>
+            </div>
+            <div class="row-four row">
+                <button class="button-1" onclick="buttonPressed('1')">1</button>
+                <button class="button-2" onclick="buttonPressed('2')">2</button>
+                <button class="button-3" onclick="buttonPressed('3')">3</button>
+                <button class="button--" onclick="buttonPressed('-')">-</button>
+            </div>
+            <div class="row-four row">
+                <button class="button-0" onclick="buttonPressed('0')">0</button>
+                <button class="button-." onclick="buttonPressed('.')">.</button>
+                <button class="button-+" onclick="buttonPressed('+')">+</button>
+                <button class="button-=" onclick="buttonPressed('=')">=</button>
+            </div>
         </div>
     </div>
+
     <script src="js/calculator.js"></script>
 </body>
+
 </html>
