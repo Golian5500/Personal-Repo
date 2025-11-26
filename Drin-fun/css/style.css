@@ -37,10 +37,10 @@ body{
 }
 
 .game {
-    flex: 1 1 calc(33.33% - 60px);   /* leave ~60px free for spacing */
-    max-width: 500px;                /* <— important: prevents over-stretch */
-    min-width: 240px;                /* keeps things responsive */
-    margin: 0 10px;                  /* ensures spacing stays visible */
+    flex: 1 1 calc(33.33% - 60px);
+    max-width: 500px;
+    min-width: 240px;
+    margin: 0 10px; 
     background-color: #9b9b9b;
     border-radius: 12px;
     padding: 12px;
@@ -57,4 +57,37 @@ body{
     object-fit: cover;
     border-radius: 8px;
     display: block;
+}
+
+.contact-support-container{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: flex-end;
+}
+.inner-container-of-contact-support-container{
+    width: 100%;
+    margin-bottom: 25px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 100px;
+}
+.inner-container-of-contact-support-container a{
+    width: fit-content;
+    height: fit-content;
+    padding: 15px 25px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-content: center;
+    text-align: center;
+    text-decoration: none;
+    color: gray;
+    font-size: larger;
+    background-color: rgb(17, 17, 17);
+    border: none;
+    border-radius: 15px;
 }
