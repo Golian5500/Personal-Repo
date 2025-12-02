@@ -6,6 +6,7 @@ body {
     display: flex;
     flex-direction: row;
     background-color: rgb(248, 250, 253);
+    font-family: Arial, Helvetica, sans-serif;
 }
 
 .left-side {
@@ -78,7 +79,6 @@ body {
     width: 100%;
     height: auto;
 }
-
 .option{
     width: 85%;
     height: 35px;
@@ -90,6 +90,15 @@ body {
     align-content: center;
     align-items: center;
     padding-left: 20px;
+    text-decoration: none;
+    font-family: "Google Sans", Roboto, RobotoDraft, Helvetica, Arial, sans-serif;
+    font-size: .875rem;
+    font-weight: 300;
+    color: #4e4e4e;
+}
+a.active-rn{
+    color: #001d35;
+    font-weight: bold;
 }
 
 .image {
@@ -98,20 +107,20 @@ body {
     flex-direction: row;
     align-items: center;
     align-content: center;
-    image-rendering: pixelated;
+    image-rendering: optimizeQuality;
 }
 
-.option a:first-child {
+.option:first-child {
     background-color: rgb(191, 214, 255);
 }
 
-.option a p {
+.option p {
     width: 80%;
 }
 
-.option a img {
-    width: 24px;
-    height: 24px;
+.option img {
+    width: 20px;
+    height: auto;
     padding: 0;
     margin: 0 20px 0 0;
 }
