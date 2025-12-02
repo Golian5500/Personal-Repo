@@ -110,7 +110,7 @@ a.active-rn{
     image-rendering: optimizeQuality;
 }
 
-.option:first-child {
+a.active-rn {
     background-color: rgb(191, 214, 255);
 }
 
@@ -129,6 +129,6 @@ a.active-rn{
     background-color: rgb(233, 233, 233);
 }
 
-.option:first-child:hover {
+a.active-rn:hover {
     background-color: rgb(191, 214, 255);
 }
