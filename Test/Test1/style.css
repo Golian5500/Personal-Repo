@@ -1,0 +1,12 @@
+/* Normal state */
+.nav-link {
+    color: blue;
+    text-decoration: none;
+    margin-right: 15px;
+}
+
+/* The special 'active' class */
+.nav-link.active {
+    color: red;
+    font-weight: bold;
+}

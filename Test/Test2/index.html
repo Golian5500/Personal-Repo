@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NEXUS // Omni-Dashboard v2.0</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link
+        href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Rajdhani:wght@500;700&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+
+    <div id="boot-screen">
+        <div class="boot-text">
+            <p>> BIOS CHECK... OK</p>
+            <p>> LOADING KERNEL... OK</p>
+            <p>> MOUNTING VIRTUAL DRIVES... OK</p>
+            <p class="blink">_ INITIALIZING UI</p>
+        </div>
+        <div class="loader-bar">
+            <div class="loader-fill"></div>
+        </div>
+    </div>
+
+    <div class="overlay-scanline"></div>
+    <div class="background-canvas-container">
+        <canvas id="neuralCanvas"></canvas>
+    </div>
+
+    <button class="mobile-menu-btn" id="mobileMenuBtn">☰</button>
+
+    <div class="layout-grid">
+        <aside class="sidebar glass-panel" id="sidebar">
+            <div class="brand">
+                <div class="logo-icon"></div>
+                <h1>NEXUS</h1>
+            </div>
+            <nav>
+                <button class="nav-item active" onclick="switchTab('overview')">
+                    <span class="icon">⊞</span> OVERVIEW
+                </button>
+                <button class="nav-item" onclick="switchTab('network')">
+                    <span class="icon">⎋</span> NETWORK
+                </button>
+                <button class="nav-item" onclick="switchTab('security')">
+                    <span class="icon">⚠</span> SECURITY
+                </button>
+                <button class="nav-item" onclick="switchTab('settings')">
+                    <span class="icon">⚙</span> CONFIG
+                </button>
+            </nav>
+            <div class="system-status">
+                <p>SYS.INTEGRITY</p>
+                <div class="bar-container">
+                    <div class="bar-fill" style="width: 94%"></div>
+                </div>
+                <small>STABLE // 94%</small>
+            </div>
+        </aside>
+
+        <main class="main-content">
+            <header class="top-bar glass-panel">
+                <div class="breadcrumbs" id="breadcrumbs">SYSTEM / OVERVIEW</div>
+                <div class="user-profile">
+                    <span id="clock">00:00:00</span>
+                    <div class="avatar">ADM</div>
+                </div>
+            </header>
+
+            <section id="overview" class="tab-content active">
+                <div class="dashboard-widgets">
+                    <div class="widget glass-panel large-widget">
+                        <div class="widget-header">
+                            <h3>LIVE TRAFFIC FLUX</h3>
+                            <div class="live-indicator"><span class="blink"></span> LIVE</div>
+                        </div>
+                        <div class="visualizer-container">
+                            <div class="audio-bars" id="audioBars"></div>
+                        </div>
+                    </div>
+                    <div class="widget glass-panel stat-card">
+                        <h3>CPU LOAD</h3>
+                        <div class="big-number" id="cpuVal">0%</div>
+                    </div>
+                    <div class="widget glass-panel stat-card">
+                        <h3>MEMORY</h3>
+                        <div class="big-number" id="memVal">0 TB</div>
+                    </div>
+                    <div class="widget glass-panel stat-card">
+                        <h3>THREAT LEVEL</h3>
+                        <div class="big-number text-alert" id="threatVal">NONE</div>
+                    </div>
+                    <div class="widget glass-panel terminal-widget">
+                        <div class="widget-header">
+                            <h3>SYSTEM LOGS</h3>
+                            <button id="purgeBtn" class="action-btn">PURGE CACHE</button>
+                        </div>
+                        <div class="terminal-output" id="terminalOutput">
+                            <p>> Initializing NEXUS Protocol...</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="network" class="tab-content">
+                <div class="glass-panel content-pad">
+                    <div class="widget-header">
+                        <h3>GLOBAL SERVER NODES</h3>
+                        <button class="action-btn" onclick="randomizeNetwork()">REFRESH PING</button>
+                    </div>
+                    <div class="network-grid" id="networkGrid">
+                    </div>
+                    <div class="latency-log">
+                        <h4>LATENCY STREAM</h4>
+                        <div id="latencyGraph" class="simple-graph"></div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="security" class="tab-content">
+                <div class="glass-panel content-pad">
+                    <div class="widget-header">
+                        <h3>ACCESS CONTROL LIST</h3>
+                        <div class="toggle-switch">
+                            <span>LOCKDOWN MODE</span>
+                            <input type="checkbox" id="lockdownToggle">
+                            <label for="lockdownToggle"></label>
+                        </div>
+                    </div>
+                    <table class="cyber-table">
+                        <thead>
+                            <tr>
+                                <th>TIMESTAMP</th>
+                                <th>USER_ID</th>
+                                <th>ORIGIN</th>
+                                <th>STATUS</th>
+                            </tr>
+                        </thead>
+                        <tbody id="securityTable">
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <section id="settings" class="tab-content">
+                <div class="glass-panel content-pad form-layout">
+                    <h3>SYSTEM CONFIGURATION</h3>
+                    <form onsubmit="event.preventDefault(); alert('CONFIGURATION SAVED');">
+                        <div class="form-group">
+                            <label>DISPLAY NAME</label>
+                            <input type="text" value="ADMINISTRATOR" class="cyber-input">
+                        </div>
+                        <div class="form-group">
+                            <label>REFRESH RATE (ms)</label>
+                            <input type="range" min="100" max="2000" value="500" class="cyber-range">
+                        </div>
+                        <div class="form-group">
+                            <label>THEME OVERRIDE</label>
+                            <select class="cyber-input">
+                                <option>CYAN_FUTURE (DEFAULT)</option>
+                                <option>RED_ALERT</option>
+                                <option>MATRIX_GREEN</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <button type="submit" class="action-btn large-btn">SAVE CHANGES</button>
+                        </div>
+                    </form>
+                </div>
+            </section>
+
+        </main>
+    </div>
+
+    <script>
+        /* --- 1. BOOT SEQUENCE --- */
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                document.getElementById('boot-screen').style.opacity = '0';
+                setTimeout(() => {
+                    document.getElementById('boot-screen').style.display = 'none';
+                }, 500);
+            }, 2500); // 2.5s simulated boot time
+        });
+
+        /* --- 2. NAVIGATION LOGIC --- */
+        function switchTab(tabId) {
+            // Remove active class from all tabs
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+            document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
+
+            // Add active class to target
+            document.getElementById(tabId).classList.add('active');
+
+            // Update Sidebar Highlight
+            const navButtons = document.querySelectorAll('.nav-item');
+            navButtons.forEach(btn => {
+                if (btn.getAttribute('onclick').includes(tabId)) {
+                    btn.classList.add('active');
+                }
+            });
+
+            // Update Breadcrumbs
+            document.getElementById('breadcrumbs').innerText = `SYSTEM / ${tabId.toUpperCase()}`;
+
+            // Close mobile menu if open
+            document.getElementById('sidebar').classList.remove('mobile-active');
+        }
+
+        // Mobile Menu Toggle
+        document.getElementById('mobileMenuBtn').addEventListener('click', () => {
+            document.getElementById('sidebar').classList.toggle('mobile-active');
+        });
+
+        /* --- 3. DASHBOARD WIDGETS (Previous Logic) --- */
+        const updateClock = () => {
+            const now = new Date();
+            document.getElementById('clock').innerText = now.toLocaleTimeString('en-US', { hour12: false });
+        };
+        setInterval(updateClock, 1000);
+
+        const cpuVal = document.getElementById('cpuVal');
+        const memVal = document.getElementById('memVal');
+        const terminal = document.getElementById('terminalOutput');
+        const randomInt = (min, max) => Math.floor(Math.random() * (max - min + 1) + min);
+
+        function simulateData() {
+            cpuVal.innerText = `${randomInt(12, 65)}%`;
+            memVal.innerText = `${(Math.random() * 10 + 60).toFixed(1)} TB`;
+        }
+        setInterval(simulateData, 2000);
+
+        // Visualizer Bars
+        const barContainer = document.getElementById('audioBars');
+        for (let i = 0; i < 30; i++) {
+            const bar = document.createElement('div');
+            bar.classList.add('bar');
+            barContainer.appendChild(bar);
+        }
+        setInterval(() => {
+            document.querySelectorAll('.bar').forEach(bar => {
+                bar.style.height = `${randomInt(10, 100)}%`;
+            });
+        }, 200);
+
+        // Purge Button
+        document.getElementById('purgeBtn').addEventListener('click', () => {
+            document.body.classList.add('glitch-active');
+            setTimeout(() => document.body.classList.remove('glitch-active'), 500);
+            terminal.innerHTML += `<p>> CACHE PURGED.</p>`;
+        });
+
+        /* --- 4. NETWORK PAGE LOGIC --- */
+        const networkGrid = document.getElementById('networkGrid');
+        const regions = ['NA-East', 'EU-West', 'Asia-Pac', 'SA-North', 'Antarc'];
+
+        function initNetwork() {
+            networkGrid.innerHTML = '';
+            for (let i = 0; i < 12; i++) {
+                const node = document.createElement('div');
+                node.classList.add('server-node');
+                node.innerHTML = `
+                    <div class="status-dot"></div>
+                    <small>${regions[randomInt(0, 4)]}-${randomInt(10, 99)}</small>
+                `;
+                networkGrid.appendChild(node);
+            }
+        }
+        initNetwork();
+
+        function randomizeNetwork() {
+            const nodes = document.querySelectorAll('.server-node');
+            nodes.forEach(node => {
+                const isOffline = Math.random() > 0.8;
+                if (isOffline) node.classList.add('offline');
+                else node.classList.remove('offline');
+            });
+        }
+        setInterval(randomizeNetwork, 3000);
+
+        /* --- 5. SECURITY PAGE LOGIC --- */
+        const securityTable = document.getElementById('securityTable');
+        const users = ['Unknown', 'Admin', 'Sys_Daemon', 'Guest_01'];
+        const statuses = ['ALLOWED', 'DENIED', 'FLAGGED'];
+
+        function addLogEntry() {
+            const row = document.createElement('tr');
+            const status = statuses[randomInt(0, 2)];
+            const colorClass = status === 'ALLOWED' ? 'text-success' : (status === 'DENIED' ? 'text-alert' : 'text-warn');
+
+            row.innerHTML = `
+                <td>${new Date().toLocaleTimeString()}</td>
+                <td>${users[randomInt(0, 3)]}</td>
+                <td>192.168.0.${randomInt(1, 255)}</td>
+                <td class="${colorClass}">${status}</td>
+            `;
+            securityTable.prepend(row);
+            if (securityTable.childElementCount > 8) securityTable.removeChild(securityTable.lastChild);
+        }
+        setInterval(addLogEntry, 1500);
+
+        /* --- 6. BACKGROUND CANVAS (Optimized) --- */
+        const canvas = document.getElementById('neuralCanvas');
+        const ctx = canvas.getContext('2d');
+        let width, height, particles = [];
+
+        function resize() {
+            width = canvas.width = window.innerWidth;
+            height = canvas.height = window.innerHeight;
+        }
+        window.addEventListener('resize', resize);
+        resize();
+
+        class Particle {
+            constructor() {
+                this.x = Math.random() * width;
+                this.y = Math.random() * height;
+                this.vx = (Math.random() - 0.5) * 1;
+                this.vy = (Math.random() - 0.5) * 1;
+            }
+            update() {
+                this.x += this.vx;
+                this.y += this.vy;
+                if (this.x < 0 || this.x > width) this.vx *= -1;
+                if (this.y < 0 || this.y > height) this.vy *= -1;
+            }
+            draw() {
+                ctx.fillStyle = 'rgba(5, 217, 232, 0.5)';
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, 1.5, 0, Math.PI * 2);
+                ctx.fill();
+            }
+        }
+
+        for (let i = 0; i < 40; i++) particles.push(new Particle());
+
+        function animateCanvas() {
+            ctx.clearRect(0, 0, width, height);
+            particles.forEach((p, index) => {
+                p.update();
+                p.draw();
+                for (let j = index + 1; j < particles.length; j++) {
+                    const p2 = particles[j];
+                    const dist = Math.hypot(p.x - p2.x, p.y - p2.y);
+                    if (dist < 120) {
+                        ctx.strokeStyle = `rgba(5, 217, 232, ${1 - dist / 120})`;
+                        ctx.lineWidth = 0.5;
+                        ctx.beginPath();
+                        ctx.moveTo(p.x, p.y);
+                        ctx.lineTo(p2.x, p2.y);
+                        ctx.stroke();
+                    }
+                }
+            });
+            requestAnimationFrame(animateCanvas);
+        }
+        animateCanvas();
+
+    </script>
+</body>
+
+</html>

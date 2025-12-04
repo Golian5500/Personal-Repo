@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <body>
+        <a href="#home" class="nav-link" onclick="setActive(this)">Link 1</a>
+        <a href="#about" class="nav-link" onclick="setActive(this)">Link 2</a>
+        <a href="#contact" class="nav-link" onclick="setActive(this)">Link 3</a>
+
+        <script>
+            function setActive(element) {
+                // 1. Get all links
+                var links = document.querySelectorAll('.nav-link');
+
+                // 2. Remove the 'active' class from ALL links
+                links.forEach(function (link) {
+                    link.classList.remove('active');
+                });
+
+                // 3. Add the 'active' class to the CLICKED link
+                element.classList.add('active');
+            }
+        </script>
+    </body>
+</body>
+
+</html>
