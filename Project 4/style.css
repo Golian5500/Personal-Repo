@@ -80,7 +80,7 @@ body {
 }
 .option{
     width: 85%;
-    height: 30px;
+    height: 32px;
     display: flex;
     flex-direction: row;
     border-bottom-right-radius: 20px;
