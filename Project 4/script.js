@@ -42,7 +42,7 @@ document.addEventListener('DOMContentLoaded', function () {
             }
 
             if (titleofpage) {
-                titleofpage.textContent = activeHash.charAt(0).toUpperCase() + activeHash.slice(1) + " - hajzerajdrin@gmail.com";
+                titleofpage.textContent = activeHash.charAt(0).toUpperCase() + activeHash.slice(1) + " - hajzerajdrin@gmail.com - Gmail";
             }
 
             // AUTO-EXPAND: If the active item is inside the dropdown, open it

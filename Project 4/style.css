@@ -156,8 +156,36 @@ a.active-rn:hover {
     align-items: center;
 }
 
-.dropdown-container{
+.dropdown-container {
     display: none;
+}
+
+#expand_more_option:focus {
+    background-color: rgb(233, 233, 233);
+}
+
+.labels-conatiner {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.labels-container-header {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.labels-container-header h4 {
+    color: rgb(60,60,60);
+    font-size: 17px;
+}
+
+.labels-container-header img {
+    width: 24px;
+    height: 24px;
 }
 
 .right-side {
