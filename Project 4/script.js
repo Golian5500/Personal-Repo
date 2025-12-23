@@ -15,7 +15,7 @@ document.addEventListener('DOMContentLoaded', function () {
         }
 
         const activeHash = currentHash.substring(1);
-        
+
         // 2. Select ALL options (including the ones in dropdown)
         // We exclude the 'expand_more_option' itself from being highlighted as a page
         const allMenuItems = document.querySelectorAll('.option:not(#expand_more_option)');
@@ -57,7 +57,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     function openDropdown() {
         isExpanded = true;
-        dropdownContainer.style.display = 'block'; 
+        dropdownContainer.style.display = 'block';
         expandImg.src = 'images/expand.png';
         expandText.innerHTML = 'Less';
     }
