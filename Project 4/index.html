@@ -168,13 +168,33 @@
             </div>
         </div>
     </div>
+    <div class="graying-background"></div>
     <div class="create-new-label-container">
         <div class="create-label-header">
             <p>New label</p>
         </div>
-        <div class="first-new-label-label">
-            <p>Please enter a new label name:</p>
-            <input type="text" id="name" name="name" required>
+        <div class="create-new-label-subcontainer">
+            <div class="first-new-label-label">
+                <p>Please enter a new label name:</p>
+                <input type="text" id="name" name="name" required>
+            </div>
+            <div class="second-new-label-label">
+                <div class="row-one-of-second-new-label-label">
+                    <input type="checkbox" id="checkbox" name="checkbox">
+                    <p>Nest label under:</p>
+                </div>
+                <div class="row-two-of-second-new-label-label">
+                    <input list="options" name="label-choice-options" /></label>
+                    <datalist id="options">
+                        <option value="Please select from a parent...">
+                        <option value="[Imap]/Important">
+                    </datalist>
+                </div>
+            </div>
+            <div class="create-label-footer">
+                <button class="cancel-add-new-label">Cancel</button>
+                <button class="create-add-new-label">Create</button>
+            </div>
         </div>
     </div>
     <script src="script.js"></script>

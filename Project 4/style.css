@@ -284,20 +284,98 @@ a.active-rn:hover {
     display: none;
 }
 
-.create-label-header p {
-    font-size: 25px;
-    margin: 5px 0;
+.graying-background{
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 9998;
+    padding: 20px;
+    background-color: rgba(0, 0, 0, 0.346);
+    display: none;
 }
 
-.first-new-label-label{
+.create-new-label-subcontainer {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.create-label-header p {
+    font-size: 24px;
+    margin: 5px 0;
+    font-family: "Google Sans Flex", "Google Sans Text", "Google Sans", Roboto, Arial, sans-serif;
+}
+
+.first-new-label-label {
     width: 100%;
     display: flex;
     flex-direction: column;
 }
-.first-new-label-label p{
+
+.first-new-label-label p, .row-one-of-second-new-label-label p {
     font-size: 14px;
-    color: rgb(90, 90, 90)
+    color: rgb(90, 90, 90);
+    font-family: "Google Sans Flex", "Google Sans Text", "Google Sans", Roboto, Arial, sans-serif;
 }
-.first-new-label-label input{
-    height: 56px;
+
+.first-new-label-label input, .row-two-of-second-new-label-label input {
+    width: 99%;
+    height: 50px;
+}
+
+.row-one-of-second-new-label-label {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    gap: 15px;
+    align-items: center;
+}
+
+.row-one-of-second-new-label-label input {
+    display: block;
+    width: 20px;
+    height: 20px;
+    background-color: white;
+    border: 6px solid #373d3f;
+    border-radius: 12px;
+    transition: all 0.2s ease;
+    margin: 0;
+}
+.create-label-footer{
+    width: 98%;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: center;
+    margin-top: 15px;
+    margin-left: 5px;
+}
+.cancel-add-new-label{
+    background-color: rgba(255,255,255,0);
+    border: none;
+    border-radius: 20px;
+    padding: 10px 15px;
+    color: #0b57d0;
+    font-size: 15px;
+    font-family: "Google Sans",Roboto,Arial,sans-serif;
+}
+.cancel-add-new-label:hover{
+    background-color: #dfecff;
+}
+.create-add-new-label{
+    background-color: #0b57d0;
+    border: none;
+    border-radius: 20px;
+    padding: 10px 25px;
+    color: white;
+    font-size: 15px;
+    font-family: "Google Sans",Roboto,Arial,sans-serif;
+    margin-left: 10px;
+}
+.create-add-new-label:hover{
+    background-color: #1c67e0;
 }

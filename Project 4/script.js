@@ -6,11 +6,12 @@ document.addEventListener('DOMContentLoaded', function () {
     const expandText = expandMoreOption.querySelector('p');
     const expandAddLabel = document.querySelector('.label-add');
     const addLabelUI = document.querySelector('.create-new-label-container');
+    const grayBackground = document.querySelector('.graying-background');
+    const cancelCreatingALabel = document.querySelector('.cancel-add-new-label');
 
     function updateActiveState() {
         let currentHash = window.location.hash;
 
-        // 1. Default Hash
         if (currentHash === "" || currentHash === "#") {
             history.replaceState(null, '', '#inbox');
             currentHash = "#inbox";
@@ -18,21 +19,17 @@ document.addEventListener('DOMContentLoaded', function () {
 
         const activeHash = currentHash.substring(1);
 
-        // 2. Select ALL options (including the ones in dropdown)
-        // We exclude the 'expand_more_option' itself from being highlighted as a page
         const allMenuItems = document.querySelectorAll('.option:not(#expand_more_option)');
 
         allMenuItems.forEach(element => {
             element.classList.remove('active-rn');
             const img = element.querySelector('img');
             if (img) {
-                // This logic takes "inbox-option" and gets "inbox"
                 const name = element.classList[0].split('-')[0];
                 img.src = `images/${name}_empty.png`;
             }
         });
 
-        // 3. Set New Active State
         const newActiveElement = document.querySelector(`.${activeHash}-option`);
 
         if (newActiveElement) {
@@ -47,14 +44,12 @@ document.addEventListener('DOMContentLoaded', function () {
                 titleofpage.textContent = activeHash.charAt(0).toUpperCase() + activeHash.slice(1) + " - hajzerajdrin@gmail.com - Gmail";
             }
 
-            // AUTO-EXPAND: If the active item is inside the dropdown, open it
             if (dropdownContainer && dropdownContainer.contains(newActiveElement)) {
                 openDropdown();
             }
         }
     }
 
-    // --- Dropdown Logic ---
     let isExpanded = false;
 
     function openDropdown() {
@@ -73,17 +68,27 @@ document.addEventListener('DOMContentLoaded', function () {
 
     expandMoreOption.addEventListener('click', function (e) {
         e.preventDefault();
-        // If we are clicking 'Less' and the active page is inside the dropdown,
-        // you might want to keep it open, but usually, Gmail allows closing it.
         isExpanded ? closeDropdown() : openDropdown();
     });
 
-    expandAddLabel.addEventListener('click', function(e) {
+    expandAddLabel.addEventListener('click', function (e) {
         e.preventDefault();
         addLabelUI.style.display = 'block'
+        grayBackground.style.display = 'block'
     });
 
-    // --- Initialize ---
+    cancelCreatingALabel.addEventListener('click', function (e) {
+        e.preventDefault();
+        addLabelUI.style.display = 'none'
+        grayBackground.style.display = 'none'
+    });
+
+    grayBackground.addEventListener('click', function (e) {
+        e.preventDefault();
+        addLabelUI.style.display = 'none'
+        grayBackground.style.display = 'none'
+    });
+
     updateActiveState();
     window.addEventListener('hashchange', updateActiveState);
 });
