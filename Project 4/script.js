@@ -4,6 +4,8 @@ document.addEventListener('DOMContentLoaded', function () {
     const dropdownContainer = document.querySelector('.dropdown-container');
     const expandImg = expandMoreOption.querySelector('img');
     const expandText = expandMoreOption.querySelector('p');
+    const expandAddLabel = document.querySelector('.label-add');
+    const addLabelUI = document.querySelector('.create-new-label-container');
 
     function updateActiveState() {
         let currentHash = window.location.hash;
@@ -74,6 +76,11 @@ document.addEventListener('DOMContentLoaded', function () {
         // If we are clicking 'Less' and the active page is inside the dropdown,
         // you might want to keep it open, but usually, Gmail allows closing it.
         isExpanded ? closeDropdown() : openDropdown();
+    });
+
+    expandAddLabel.addEventListener('click', function(e) {
+        e.preventDefault();
+        addLabelUI.style.display = 'block'
     });
 
     // --- Initialize ---
