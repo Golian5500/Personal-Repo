@@ -379,3 +379,6 @@ a.active-rn:hover {
 .create-add-new-label:hover{
     background-color: #1c67e0;
 }
+.searchbar{
+    background: gray;
+}
