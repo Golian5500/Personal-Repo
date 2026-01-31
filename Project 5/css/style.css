@@ -302,3 +302,18 @@ header {
         max-height: 600px;
     }
 }
+@media(max-width: 800px){
+    .posting{
+        max-height: 500px;
+    }
+}
+@media(max-width: 550px){
+    .posting{
+        max-height: 400px;
+    }
+}
+@media(max-width: 350px){
+    .posting{
+        max-height: 335px;
+    }
+}
