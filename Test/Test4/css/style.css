@@ -1,0 +1,7 @@
+.content {
+    background-image: url("img/image.png");
+    background-size: cover;      /* Scales image to fill the area */
+    background-position: center; /* Centers the image */
+    width: 100%;
+    height: 100vh;               /* Takes up 100% of the viewport height */
+}
