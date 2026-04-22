@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JS patterns</title>
+</head>
+
+<body>
+    <script>
+        function screenLog(value) {
+            let paragraph = document.createElement('p');
+            paragraph.textContent = value || " "; 
+            paragraph.style.cssText = `
+                margin: 0;
+                font-size: 30px;
+                font-family: 'Courier New', monospace;
+                white-space: pre; /* Essential for console-like behavior */
+                min-height: 1em;  /* Ensures lines with no text still take up space */
+            `;
+            document.body.appendChild(paragraph);
+        }
+        screenLog('Triangle Pattern');
+        for (let i = 0; i <= 5; i++) {
+            let text = '';
+            text += '*'.repeat(i)
+            console.log(text);
+            screenLog(text);
+        }
+        screenLog('Inverted Triangle Pattern');
+        for (let i = 5; i >= 0; i--) {
+            let text = '';
+            text += '*'.repeat(i);
+            console.log(text);
+            screenLog(text);
+        }
+        screenLog('Square Pattern');
+        for (let i = 0; i < 5; i++) {
+            let text = '*****';
+            console.log(text);
+            screenLog(text);
+        }
+        screenLog('Number Triangle Pattern');
+        for (let i = 0; i <= 5; i++) {
+            let text = '';
+            text += String(i).repeat(i);
+            console.log(text);
+            screenLog(text);
+        }
+        screenLog('Checkboard Pattern');
+        for (let i = 0; i < 5; i++) {
+            let row = '';
+            if (i % 2 === 0) {
+                row += '# '.repeat(3);
+            } else {
+                row += ' #'.repeat(3);
+            }
+            console.log(row);
+            screenLog(row)
+        }
+    </script>
+</body>
+
+</html>
