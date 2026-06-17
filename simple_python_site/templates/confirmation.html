@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% block title %}Order Confirmed! - Glamour Beauty{% endblock %}
+{% block content %}
+<div style="max-width: 700px; margin: 2rem auto; text-align: center;">
+    <div style="font-size: 4rem; margin-bottom: 1rem;">🎉</div>
+    <h1 class="page-title" style="color: #2e7d32;">Order Confirmed!</h1>
+    <p style="color: #666; font-size: 1.1rem; margin-bottom: 2rem;">Thank you for your purchase! Your order has been placed successfully.</p>
+
+    <div class="card" style="text-align: left; padding: 2rem;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; padding-bottom: 1rem; border-bottom: 2px solid #e8f5e9;">
+            <h2 style="color: #333;">Order #{{ order.id }}</h2>
+            <span style="color: #2e7d32; font-size: 0.9rem; background: #e8f5e9; padding: 0.3rem 1rem; border-radius: 15px;">Paid ✓</span>
+        </div>
+
+        <div style="margin-bottom: 1.5rem;">
+            <h3 style="color: #666; margin-bottom: 0.5rem;">Shipping Details</h3>
+            <p style="color: #333;"><strong>Name:</strong> {{ order.customer_name }}</p>
+            <p style="color: #333;"><strong>Email:</strong> {{ order.customer_email }}</p>
+            <p style="color: #333;"><strong>Address:</strong> {{ order.shipping_address }}</p>
+        </div>
+
+        <div style="margin-bottom: 1.5rem;">
+            <h3 style="color: #666; margin-bottom: 0.5rem;">Payment</h3>
+            <p style="color: #333;">Card ending in <strong>{{ order.card_last_four }}</strong></p>
+            <p style="color: #999; font-size: 0.9rem;">🔒 No real payment was processed.</p>
+        </div>
+
+        <div style="margin-bottom: 1.5rem;">
+            <h3 style="color: #666; margin-bottom: 0.5rem;">Items Ordered</h3>
+            {% for item in items %}
+            <div style="display: flex; align-items: center; gap: 1rem; padding: 0.8rem 0; border-bottom: 1px solid #f0f0f0;">
+                <img src="{{ item.image_url }}" alt="{{ item.name }}" style="width: 60px; height: 60px; object-fit: cover; border-radius: 8px;">
+                <div style="flex: 1;">
+                    <div style="font-weight: 600; color: #333;">{{ item.name }}</div>
+                    <div style="font-size: 0.85rem; color: #999;">Qty: {{ item.quantity }}</div>
+                </div>
+                <div style="font-weight: bold; color: #d4145a;">${{ "%.2f"|format(item.price * item.quantity) }}</div>
+            </div>
+            {% endfor %}
+        </div>
+
+        <div style="display: flex; justify-content: space-between; padding: 1rem 0; border-top: 2px solid #e8f5e9;">
+            <span style="font-size: 1.2rem; font-weight: bold; color: #333;">Total Charged</span>
+            <span style="font-size: 1.5rem; font-weight: bold; color: #d4145a;">${{ "%.2f"|format(order.total) }}</span>
+        </div>
+    </div>
+
+    <div style="margin-top: 2rem;">
+        <a href="{{ url_for('index') }}" class="btn btn-primary">Continue Shopping</a>
+    </div>
+</div>
+{% endblock %}

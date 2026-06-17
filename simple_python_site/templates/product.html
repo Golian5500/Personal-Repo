@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block title %}{{ product.name }} - Glamour Beauty{% endblock %}
+{% block content %}
+<div class="card" style="max-width: 800px; margin: 2rem auto;">
+    <div style="display: flex; flex-wrap: wrap; gap: 2rem;">
+        <div style="flex: 1; min-width: 250px;">
+            <img src="{{ product.image_url }}" alt="{{ product.name }}" style="width: 100%; border-radius: 10px;">
+        </div>
+        <div style="flex: 1; min-width: 250px;">
+            <div class="product-category">{{ product.category }}</div>
+            <div class="product-brand" style="margin-top: 1rem;">{{ product.brand }}</div>
+            <h1 style="font-size: 2rem; margin: 1rem 0; color: #333;">{{ product.name }}</h1>
+            <p style="color: #666; line-height: 1.6; margin: 1rem 0;">{{ product.description }}</p>
+            <div class="product-price" style="font-size: 2rem;">${{ "%.2f"|format(product.price) }}</div>
+            <div style="margin-top: 2rem;">
+                <a href="{{ url_for('add_to_cart', product_id=product.id) }}" class="btn btn-primary" style="margin-right: 1rem;">Add to Cart</a>
+                <a href="{{ url_for('index') }}" class="btn btn-secondary">Continue Shopping</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

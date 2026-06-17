@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+{% block title %}Shopping Cart - Glamour Beauty{% endblock %}
+{% block content %}
+<h1 class="page-title">Your Cart 🛍️</h1>
+
+{% if cart_items %}
+<div class="card" style="padding: 2rem;">
+    <table style="width: 100%; border-collapse: collapse;">
+        <thead>
+            <tr style="border-bottom: 2px solid #fce4ec;">
+                <th style="text-align: left; padding: 1rem; color: #666;">Product</th>
+                <th style="text-align: center; padding: 1rem; color: #666;">Price</th>
+                <th style="text-align: center; padding: 1rem; color: #666;">Quantity</th>
+                <th style="text-align: right; padding: 1rem; color: #666;">Total</th>
+                <th style="text-align: center; padding: 1rem; color: #666;">Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in cart_items %}
+            <tr style="border-bottom: 1px solid #f0f0f0;">
+                <td style="padding: 1rem; display: flex; align-items: center; gap: 1rem;">
+                    <img src="{{ item.product.image_url }}" alt="{{ item.product.name }}" style="width: 80px; height: 80px; object-fit: cover; border-radius: 10px;">
+                    <div>
+                        <div style="font-weight: 600; color: #333;">{{ item.product.name }}</div>
+                        <div style="font-size: 0.85rem; color: #d4145a;">{{ item.product.brand }}</div>
+                    </div>
+                </td>
+                <td style="text-align: center; padding: 1rem; color: #666;">${{ "%.2f"|format(item.product.price) }}</td>
+                <td style="text-align: center; padding: 1rem;">
+                    <form method="POST" action="{{ url_for('update_cart') }}" style="display: flex; align-items: center; justify-content: center; gap: 0.5rem;">
+                        <input type="number" name="qty_{{ item.product.id }}" value="{{ item.quantity }}" min="1" style="width: 60px; padding: 0.5rem; border: 1px solid #ddd; border-radius: 5px; text-align: center;">
+                        <button type="submit" class="btn btn-sm btn-secondary" style="padding: 0.4rem 0.8rem;">Update</button>
+                    </form>
+                </td>
+                <td style="text-align: right; padding: 1rem; font-weight: bold; color: #d4145a;">${{ "%.2f"|format(item.item_total) }}</td>
+                <td style="text-align: center; padding: 1rem;">
+                    <a href="{{ url_for('remove_from_cart', product_id=item.product.id) }}" class="btn btn-sm" style="background: #ffebee; color: #c62828; padding: 0.4rem 0.8rem; border-radius: 5px; text-decoration: none;">Remove</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+        <tfoot>
+            <tr>
+                <td colspan="3" style="text-align: right; padding: 1.5rem; font-size: 1.3rem; font-weight: bold; color: #333;">Total:</td>
+                <td style="text-align: right; padding: 1.5rem; font-size: 1.5rem; font-weight: bold; color: #d4145a;">${{ "%.2f"|format(total) }}</td>
+                <td></td>
+            </tr>
+        </tfoot>
+    </table>
+</div>
+<div style="text-align: right; margin-top: 2rem;">
+    <a href="{{ url_for('index') }}" class="btn btn-secondary" style="margin-right: 1rem;">Continue Shopping</a>
+    <a href="{{ url_for('checkout') }}" class="btn btn-primary">Proceed to Checkout</a>
+</div>
+{% else %}
+<div class="card" style="text-align: center; padding: 4rem;">
+    <h2 style="color: #666; margin-bottom: 1rem;">Your cart is empty 🛒</h2>
+    <p style="color: #999; margin-bottom: 2rem;">Looks like you haven't added any products yet.</p>
+    <a href="{{ url_for('index') }}" class="btn btn-primary">Start Shopping</a>
+</div>
+{% endif %}
+{% endblock %}

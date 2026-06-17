@@ -1,0 +1,99 @@
+{% extends "base.html" %}
+{% block title %}Checkout - Glamour Beauty{% endblock %}
+{% block content %}
+<h1 class="page-title">Checkout 💳</h1>
+
+<div style="display: flex; flex-wrap: wrap; gap: 2rem;">
+    <div style="flex: 2; min-width: 300px;">
+        <div class="card" style="padding: 2rem;">
+            <h2 style="color: #333; margin-bottom: 1.5rem;">Shipping Information</h2>
+            
+            {% if errors %}
+            <div>
+                {% for error in errors %}
+                <div class="error-message">{{ error }}</div>
+                {% endfor %}
+            </div>
+            {% endif %}
+            
+            <form method="POST" action="{{ url_for('process_order') }}">
+                <div style="margin-bottom: 1.5rem;">
+                    <label style="display: block; margin-bottom: 0.5rem; color: #666; font-weight: 600;">Full Name</label>
+                    <input type="text" name="name" value="{{ form_data.name if form_data else '' }}" required style="width: 100%; padding: 0.8rem; border: 1px solid #ddd; border-radius: 8px; font-size: 1rem;">
+                </div>
+                
+                <div style="margin-bottom: 1.5rem;">
+                    <label style="display: block; margin-bottom: 0.5rem; color: #666; font-weight: 600;">Email Address</label>
+                    <input type="email" name="email" value="{{ form_data.email if form_data else '' }}" required style="width: 100%; padding: 0.8rem; border: 1px solid #ddd; border-radius: 8px; font-size: 1rem;">
+                </div>
+                
+                <div style="margin-bottom: 1.5rem;">
+                    <label style="display: block; margin-bottom: 0.5rem; color: #666; font-weight: 600;">Shipping Address</label>
+                    <textarea name="address" required style="width: 100%; padding: 0.8rem; border: 1px solid #ddd; border-radius: 8px; font-size: 1rem; min-height: 80px;">{{ form_data.address if form_data else '' }}</textarea>
+                </div>
+                
+                <h2 style="color: #333; margin: 2rem 0 1.5rem 0;">Payment Information</h2>
+                <p style="color: #999; font-size: 0.9rem; margin-bottom: 1rem;">🔒 This is a simulated payment. No real charges will be made.</p>
+                
+                <div style="margin-bottom: 1.5rem;">
+                    <label style="display: block; margin-bottom: 0.5rem; color: #666; font-weight: 600;">Card Number</label>
+                    <input type="text" name="card_number" value="{{ form_data.card_number if form_data else '' }}" placeholder="4111 1111 1111 1111" required style="width: 100%; padding: 0.8rem; border: 1px solid #ddd; border-radius: 8px; font-size: 1rem;">
+                    <p style="color: #999; font-size: 0.8rem; margin-top: 0.3rem;">Enter a valid card number (Luhn algorithm check)</p>
+                </div>
+                
+                <div style="display: flex; gap: 1rem; margin-bottom: 1.5rem;">
+                    <div style="flex: 1;">
+                        <label style="display: block; margin-bottom: 0.5rem; color: #666; font-weight: 600;">Expiration Month</label>
+                        <select name="exp_month" required style="width: 100%; padding: 0.8rem; border: 1px solid #ddd; border-radius: 8px; font-size: 1rem;">
+                            <option value="">Month</option>
+                            {% for m in range(1, 13) %}
+                            <option value="{{ m }}" {% if form_data and form_data.exp_month|int == m %}selected{% endif %}>{{ "%02d"|format(m) }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div style="flex: 1;">
+                        <label style="display: block; margin-bottom: 0.5rem; color: #666; font-weight: 600;">Expiration Year</label>
+                        <select name="exp_year" required style="width: 100%; padding: 0.8rem; border: 1px solid #ddd; border-radius: 8px; font-size: 1rem;">
+                            <option value="">Year</option>
+                            {% for y in range(2024, 2035) %}
+                            <option value="{{ y }}" {% if form_data and form_data.exp_year|int == y %}selected{% endif %}>{{ y }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+                
+                <div style="margin-bottom: 2rem;">
+                    <label style="display: block; margin-bottom: 0.5rem; color: #666; font-weight: 600;">CVV</label>
+                    <input type="text" name="cvv" value="{{ form_data.cvv if form_data else '' }}" placeholder="123" required style="width: 120px; padding: 0.8rem; border: 1px solid #ddd; border-radius: 8px; font-size: 1rem;">
+                </div>
+                
+                <div style="background: #fce4ec; padding: 1rem; border-radius: 10px; margin-bottom: 2rem;">
+                    <h3 style="color: #d4145a; margin-bottom: 0.5rem;">Test Card Numbers (Luhn-valid):</h3>
+                    <p style="color: #666; font-size: 0.9rem;">4111 1111 1111 1111 (Visa)<br>5500 0000 0000 0004 (Mastercard)<br>3400 0000 0000 009 (Amex)</p>
+                </div>
+                
+                <button type="submit" class="btn btn-primary" style="width: 100%; font-size: 1.2rem; padding: 1rem;">Pay ${{ "%.2f"|format(total) }}</button>
+            </form>
+        </div>
+    </div>
+    
+    <div style="flex: 1; min-width: 280px;">
+        <div class="card" style="padding: 2rem; position: sticky; top: 100px;">
+            <h2 style="color: #333; margin-bottom: 1.5rem;">Order Summary</h2>
+            {% for item in products %}
+            <div style="display: flex; justify-content: space-between; padding: 0.8rem 0; border-bottom: 1px solid #f0f0f0;">
+                <div>
+                    <div style="font-weight: 600; color: #333;">{{ item.product.name }}</div>
+                    <div style="font-size: 0.85rem; color: #999;">Qty: {{ item.quantity }}</div>
+                </div>
+                <div style="font-weight: 600; color: #d4145a;">${{ "%.2f"|format(item.item_total) }}</div>
+            </div>
+            {% endfor %}
+            <div style="display: flex; justify-content: space-between; padding: 1rem 0; margin-top: 1rem; border-top: 2px solid #fce4ec;">
+                <span style="font-size: 1.2rem; font-weight: bold; color: #333;">Total</span>
+                <span style="font-size: 1.5rem; font-weight: bold; color: #d4145a;">${{ "%.2f"|format(total) }}</span>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

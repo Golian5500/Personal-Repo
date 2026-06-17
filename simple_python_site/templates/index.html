@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block title %}Glamour Beauty - Shop{% endblock %}
+{% block content %}
+<h1 class="page-title">Discover Your Glow ✨</h1>
+<p class="page-subtitle">Premium makeup products for every look and occasion</p>
+
+<div class="product-grid">
+    {% for product in products %}
+    <div class="product-card">
+        <a href="{{ url_for('product_detail', product_id=product.id) }}">
+            <img src="{{ product.image_url }}" alt="{{ product.name }}" class="product-image">
+        </a>
+        <div class="product-info">
+            <div class="product-brand">{{ product.brand }}</div>
+            <div class="product-name">
+                <a href="{{ url_for('product_detail', product_id=product.id) }}" style="text-decoration: none; color: inherit;">{{ product.name }}</a>
+            </div>
+            <div class="product-category">{{ product.category }}</div>
+            <div class="product-price">${{ "%.2f"|format(product.price) }}</div>
+            <a href="{{ url_for('add_to_cart', product_id=product.id) }}" class="btn btn-primary btn-sm" style="width: 100%; text-align: center;">Add to Cart</a>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}
